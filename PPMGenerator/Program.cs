@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using PPMGenerator.ImageSpace;
 
@@ -12,16 +13,19 @@ namespace PPMGenerator
             int cols = 200;
             var image = new Image(cols, rows);
             var rollDice = new Random();
-            for (int r = 0; r < rows; r++)
+            for (int row = 0; row < rows; row++)
             {
-                for (int c = 0; c < cols; c++)
+                for (int col = 0; col < cols; col++)
                 {
-                    Colour pixel = new Colour(rollDice.Next(0,255), rollDice.Next(0,255), rollDice.Next(0,255));
-                    image.SetPixel(r, c, pixel);
+                    var red = rollDice.Next(0, 255);
+                    var green = rollDice.Next(0, 255);
+                    var blue = rollDice.Next(0, 255);
+                    Colour pixel = new Colour(red, green,blue);
+                    image.SetPixel(row, col, pixel);
                 }
             }
-
-            image.ToPpmImage();
+            var filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            image.ToPpmImage(filePath);
         }
     }
 }
