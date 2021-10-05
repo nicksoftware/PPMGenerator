@@ -17,10 +17,8 @@ namespace PPMGenerator.ImageSpace
             _pixels = new Colour[_rows,_cols];
         }
         public void SetPixel(int row, int col, Colour pixel) => _pixels[row, col] = pixel;
-
-        public Colour GetPixel(int row, int col) => _pixels[row, col];
-
-        public void  ToPpmImage()
+        private Colour GetPixel(int row, int col) => _pixels[row, col];
+        public void  ToPpmImage(string filePath,string fileName = "ppmImage")
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("P3");
@@ -42,8 +40,8 @@ namespace PPMGenerator.ImageSpace
                 }
             }
             string text = sb.ToString();
-            string fileName = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "image.ppm");
-            File.WriteAllText(fileName,text);
+            string finalName = Path.Join(filePath, $"{fileName}.ppm");
+            File.WriteAllText(finalName,text);
         }
     }
 }
