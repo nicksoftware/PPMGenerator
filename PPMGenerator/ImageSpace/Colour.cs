@@ -1,13 +1,10 @@
-using System.Threading.Tasks;
-
 namespace PPMGenerator.ImageSpace
 {
-    public struct Colour
+    public readonly struct Colour
     {
-        public int Red;
-        public int Green;
-        public int Blue;
-
+        public readonly int Red;
+        public readonly int Green;
+        public readonly int Blue;
         public Colour(int red, int green, int blue)
         {
             Red = red;
