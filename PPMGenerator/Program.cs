@@ -13,7 +13,7 @@ for (int row = 0; row < rows; row++)
         var red = rollDice.Next(0, 255);
         var green = rollDice.Next(0, 255);
         var blue = rollDice.Next(0, 255);
-        Colour pixel = new Colour(red, green,blue);
+        Color pixel = new Color(red, green,blue);
         image.SetPixel(row, col, pixel);
     }
 }

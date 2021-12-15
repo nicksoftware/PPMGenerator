@@ -8,16 +8,16 @@ namespace PPMGenerator.ImageSpace
     {
         private readonly int _rows;
         private readonly int _cols;
-        private readonly Colour[,] _pixels;
+        private readonly Color[,] _pixels;
 
         public Image(int cols, int rows)
         {
             _cols = cols;
             _rows = rows;
-            _pixels = new Colour[_rows,_cols];
+            _pixels = new Color[_rows,_cols];
         }
-        public void SetPixel(int row, int col, Colour pixel) => _pixels[row, col] = pixel;
-        private Colour GetPixel(int row, int col) => _pixels[row, col];
+        public void SetPixel(int row, int col, Color pixel) => _pixels[row, col] = pixel;
+        private Color GetPixel(int row, int col) => _pixels[row, col];
         public void  ToPpmImage(string filePath,string fileName = "ppmImage")
         {
             StringBuilder sb = new StringBuilder();
