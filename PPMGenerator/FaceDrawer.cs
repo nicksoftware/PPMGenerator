@@ -11,7 +11,6 @@ namespace PPMGenerator
         private readonly Image image;
         private readonly int area = int.MinValue;
         private readonly double radius = double.MinValue;
-        private readonly Color pencilColor = new(128, 128, 128);
 
         public FaceDrawer(int rows = 600, int cols = 600)
         {
@@ -25,20 +24,20 @@ namespace PPMGenerator
         public FaceDrawer WithFace(Color color)
         {
             WriteLine("Drawing Face Circle");
-            image.DrawCircle(rows / 2, cols / 2, (int)radius / 2, pencilColor);
+            DrawCircle(rows / 2, cols / 2, (int)radius / 2, color);
             return this;
         }
 
         public FaceDrawer WithEye(int row, int col, Color color, string eye = "left")
         {
             WriteLine($"Drawing {eye} Eye Circle");
-            image.DrawCircle(row, col, (int)radius / 8, color);
+            DrawCircle(row, col, (int)radius / 8, color);
             return this;
         }
         public FaceDrawer WithNose(Color color)
         {
             WriteLine("Drawing Nose Circle");
-            image.DrawCircle(rows / 2, cols / 2, (int)radius / 30, color);
+            DrawCircle(rows / 2, cols / 2, (int)radius / 30, color);
             return this;
         }
 
@@ -46,7 +45,7 @@ namespace PPMGenerator
         {
             WriteLine("Drawing mouth  Circle");
 
-            image.DrawCircle(rows / 2, 400, (int)radius / 8, color);
+            DrawCircle(rows / 2, 400, (int)radius / 8, color);
             return this;
         }
 
@@ -69,6 +68,37 @@ namespace PPMGenerator
         {
             WriteLine("Converting to Image...");
             return image;
+        }
+
+        /**
+        * DrawCircle method
+        *
+        * @param x x-coordinate of the center of the circle
+        * @param y y-coordinate of the center of the circle
+        * @param radius radius of the circle
+        * @param color color of the circle
+        */
+        public void DrawCircle(int row, int col, int radius, Color color)
+        {
+            const double PI = Math.PI;
+            double d, angle, x1, y1;
+
+            for (int i = row - radius; i <= row + radius; i++)
+            {
+                for (d = 0; d < 360; d += 0.1)
+                {
+                    angle = d;
+                    x1 = radius * Math.Cos(angle * PI / 180);
+                    y1 = radius * Math.Sin(angle * PI / 180);
+
+                    int drawX = (int)(col + y1);
+                    int drawY = (int)(row + x1);
+                    if (drawX >= 0 && drawX < rows && drawY >= 0 && drawY < cols)
+                    {
+                        image.SetPixel(drawX, drawY, color);
+                    }
+                }
+            }
         }
     }
 }

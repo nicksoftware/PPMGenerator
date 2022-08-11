@@ -32,36 +32,6 @@ namespace PPMGenerator.ImageSpace
             _pixels = new Color[_rows, _cols];
         }
 
-        /**
-        * DrawCircle method
-        *
-        * @param x x-coordinate of the center of the circle
-        * @param y y-coordinate of the center of the circle
-        * @param radius radius of the circle
-        * @param color color of the circle
-        */
-        public void DrawCircle(int row, int col, int radius, Color color)
-        {
-            const double PI = Math.PI;
-            double d, angle, x1, y1;
-
-            for (int i = row - radius; i <= row + radius; i++)
-            {
-                for (d = 0; d < 360; d += 0.1)
-                {
-                    angle = d;
-                    x1 = radius * Math.Cos(angle * PI / 180);
-                    y1 = radius * Math.Sin(angle * PI / 180);
-
-                    int drawX = (int)(col + y1);
-                    int drawY = (int)(row + x1);
-                    if (drawX >= 0 && drawX < _rows && drawY >= 0 && drawY < _cols)
-                    {
-                        _pixels[drawX, drawY] = color;
-                    }
-                }
-            }
-        }
 
         /**
         * Set Pixel method
