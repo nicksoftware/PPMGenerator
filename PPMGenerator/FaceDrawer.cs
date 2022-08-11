@@ -4,6 +4,23 @@ using static System.Console;
 
 namespace PPMGenerator
 {
+    public enum Eye
+    {
+        Left,
+        Right
+    }
+
+    public enum Mouth
+    {
+        Open,
+        Closed
+    }
+
+    public enum Nose
+    {
+        Up,
+        Down
+    }
     public class FaceDrawer
     {
         private readonly int rows;
@@ -28,24 +45,40 @@ namespace PPMGenerator
             return this;
         }
 
-        public FaceDrawer WithEye(int row, int col, Color color, string eye = "left")
+        public FaceDrawer WithEye(Color color, Eye eye = Eye.Left)
         {
+            int xPosition = (int)(rows * .36);
+            int yPosition = (int)(cols * .40);
+            if (eye == Eye.Right)
+            {
+                xPosition = rows - xPosition;
+            }
             WriteLine($"Drawing {eye} Eye Circle");
-            DrawCircle(row, col, (int)radius / 8, color);
+            DrawCircle(xPosition, yPosition, (int)radius / 9, color);
             return this;
         }
         public FaceDrawer WithNose(Color color)
         {
             WriteLine("Drawing Nose Circle");
-            DrawCircle(rows / 2, cols / 2, (int)radius / 30, color);
+            DrawCircle(rows / 2, cols / 2, (int)radius / 20, color);
             return this;
         }
 
-        public FaceDrawer WithMouth(Color color)
-        {
-            WriteLine("Drawing mouth  Circle");
+        public FaceDrawer WithMouth(Color color, Mouth mouth = Mouth.Open)
 
-            DrawCircle(rows / 2, 400, (int)radius / 8, color);
+        {
+            int yPosition = (int)(cols * .66);
+            if (mouth == Mouth.Open)
+            {
+                WriteLine("Drawing Open Mouth Circle");
+                DrawCircle(rows / 2, yPosition, (int)radius / 7, color);
+            }
+            else
+            {
+                WriteLine("Drawing Closed Mouth Circle");
+                DrawHalfCircle(rows / 2, yPosition, (int)radius / 20, color);
+            }
+
             return this;
         }
 
@@ -90,6 +123,29 @@ namespace PPMGenerator
                     angle = d;
                     x1 = radius * Math.Cos(angle * PI / 180);
                     y1 = radius * Math.Sin(angle * PI / 180);
+
+                    int drawX = (int)(col + y1);
+                    int drawY = (int)(row + x1);
+                    if (drawX >= 0 && drawX < rows && drawY >= 0 && drawY < cols)
+                    {
+                        image.SetPixel(drawX, drawY, color);
+                    }
+                }
+            }
+        }
+
+        public void DrawHalfCircle(int row, int col, int radius, Color color)
+        {
+            const double PI = Math.PI;
+            double d, angle, x1, y1;
+
+            for (int i = row - radius; i <= row + radius; i++)
+            {
+                for (d = 0; d < 360; d += 0.1)
+                {
+                    angle = d;
+                    x1 = radius * Math.Cos(angle * PI / 2);
+                    y1 = radius * Math.Sin(angle * PI / 30);
 
                     int drawX = (int)(col + y1);
                     int drawY = (int)(row + x1);

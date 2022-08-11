@@ -11,8 +11,8 @@ string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 new FaceDrawer(rows, cols)
 .ClearCanvas(new Color(255, 255, 255))
 .WithFace(pencilColor)
-.WithEye(rows - 220, 240, pencilColor, "left")
-.WithEye(220, 240, pencilColor, "right")
+.WithEye(pencilColor, Eye.Left)
+.WithEye(pencilColor, Eye.Right)
 .WithNose(pencilColor)
-.WithMouth(pencilColor)
+.WithMouth(pencilColor, Mouth.Open)
 .ToPpmImage(filePath);
