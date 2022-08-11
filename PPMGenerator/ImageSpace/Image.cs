@@ -97,9 +97,9 @@ public class Image
     public void ToPpmImage(string filePath, string fileName = "ppmImage")
     {
         StringBuilder sb = new();
-        _ = sb.AppendLine("P3");
-        _ = sb.AppendLine($"{_cols} {_rows}");
-        _ = sb.AppendLine("255"); //Highest Color intensity
+        sb.AppendLine("P3");
+        sb.AppendLine($"{_cols} {_rows}");
+        sb.AppendLine("255"); //Highest Color intensity
 
         string space = " ";
         for (int r = 0; r < _rows; r++)
@@ -107,12 +107,12 @@ public class Image
             for (int c = 0; c < _cols; c++)
             {
                 Color pixel = GetPixel(r, c);
-                _ = sb.Append(pixel.Red);
-                _ = sb.Append(space);
-                _ = sb.Append(pixel.Green);
-                _ = sb.Append(space);
-                _ = sb.Append(pixel.Blue);
-                _ = sb.AppendLine();
+                sb.Append(pixel.Red);
+                sb.Append(space);
+                sb.Append(pixel.Green);
+                sb.Append(space);
+                sb.Append(pixel.Blue);
+                sb.AppendLine();
             }
         }
         string text = sb.ToString();
