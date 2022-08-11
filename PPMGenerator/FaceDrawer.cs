@@ -52,17 +52,22 @@ namespace PPMGenerator
 
         public void ToPpmImage(string filePath, string fileName = "face.ppm")
         {
+            WriteLine("Writing PPM Image");
             image.ToPpmImage(filePath, fileName);
+            WriteLine("Done");
         }
 
         public FaceDrawer ClearCanvas(Color color)
         {
+            WriteLine("Clearing Canvas...");
             image.ClearCanvas(color);
+            WriteLine("Canvas Cleared...");
             return this;
         }
 
         public Image ToImage()
         {
+            WriteLine("Converting to Image...");
             return image;
         }
     }
