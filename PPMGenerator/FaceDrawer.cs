@@ -50,7 +50,7 @@ namespace PPMGenerator
             return this;
         }
 
-        public void ToPpmImage(string filePath, string fileName = "face.ppm")
+        public void ToPpmImage(string filePath, string fileName = "face")
         {
             WriteLine("Writing PPM Image");
             image.ToPpmImage(filePath, fileName);
