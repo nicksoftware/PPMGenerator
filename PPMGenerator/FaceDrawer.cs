@@ -76,7 +76,7 @@ namespace PPMGenerator
             else
             {
                 WriteLine("Drawing Closed Mouth Circle");
-                DrawHalfCircle(rows / 2, yPosition, (int)radius / 20, color);
+                DrawClosedMouth(rows / 2, yPosition, (int)radius / 20, color);
             }
 
             return this;
@@ -134,7 +134,7 @@ namespace PPMGenerator
             }
         }
 
-        public void DrawHalfCircle(int row, int col, int radius, Color color)
+        public void DrawClosedMouth(int row, int col, int radius, Color color)
         {
             const double PI = Math.PI;
             double d, angle, x1, y1;
