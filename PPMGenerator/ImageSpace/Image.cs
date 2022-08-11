@@ -1,119 +1,122 @@
-using System;
 using System.IO;
 using System.Text;
 
-namespace PPMGenerator.ImageSpace
+namespace PPMGenerator.ImageSpace;
+
+/**
+* Image class
+* 
+* @author Nicolas Maluleke 
+* @version 1.0
+*/
+public class Image
 {
+    private readonly int _rows;
+    private readonly int _cols;
+    private readonly Color[,] _pixels;
+
     /**
-    * Image class
-    * 
-    * @author Nicolas Maluleke 
-    * @version 1.0
+    * Image constructor
+    *   
+    * @param rows number of pixels in the image horizontally
+    * @param cols number of pixels in the image vertically
     */
-    public class Image
+
+    public Image(int cols, int rows)
     {
-        private readonly int _rows;
-        private readonly int _cols;
-        private readonly Color[,] _pixels;
+        _cols = cols;
+        _rows = rows;
 
-        /**
-        * Image constructor
-        *   
-        * @param rows number of pixels in the image horizontally
-        * @param cols number of pixels in the image vertically
-        */
+        // Create an array of pixels
+        _pixels = new Color[_rows, _cols];
+    }
 
-        public Image(int cols, int rows)
+    /**
+    * Set Pixel method
+    *
+    * @param x x-coordinate of the pixel
+    * @param y y-coordinate of the pixel
+    * @param color color of the pixel
+    */
+    public void SetPixel(int row, int col, Color pixel)
+    {
+        _pixels[row, col] = pixel;
+    }
+
+    /**
+    * Get Pixel method
+    *
+    * @param x x-coordinate of the pixel
+    * @param y y-coordinate of the pixel
+    * @return color of the pixel
+    */
+    private Color GetPixel(int row, int col)
+    {
+        return _pixels[row, col];
+    }
+
+    /**
+     * ClearCanvas method
+     */
+    public void ClearCanvas()
+    {
+        Color color = new(255, 255, 255);
+
+        for (int row = 0; row < _rows; row++)
         {
-            _cols = cols;
-            _rows = rows;
-
-            // Create an array of pixels
-            _pixels = new Color[_rows, _cols];
-        }
-
-
-        /**
-        * Set Pixel method
-        *
-        * @param x x-coordinate of the pixel
-        * @param y y-coordinate of the pixel
-        * @param color color of the pixel
-        */
-        public void SetPixel(int row, int col, Color pixel) => _pixels[row, col] = pixel;
-
-        /**
-        * Get Pixel method
-        *
-        * @param x x-coordinate of the pixel
-        * @param y y-coordinate of the pixel
-        * @return color of the pixel
-        */
-        private Color GetPixel(int row, int col) => _pixels[row, col];
-
-        /**
-         * ClearCanvas method
-         */
-        public void ClearCanvas()
-        {
-            Color color = new(255, 255, 255);
-
-            for (int row = 0; row < _rows; row++)
+            for (int col = 0; col < _cols; col++)
             {
-                for (int col = 0; col < _cols; col++)
-                {
 
-                    SetPixel(row, col, color);
-                }
+                SetPixel(row, col, color);
             }
         }
+    }
 
-        /**
-        * ClearCanvas method override 
-        *
-        * @param color the color to fill the image with
-        */
-        public void ClearCanvas(Color color)
+    /**
+    * ClearCanvas method override 
+    *
+    * @param color the color to fill the image with
+    */
+    public void ClearCanvas(Color color)
+    {
+        for (int row = 0; row < _rows; row++)
         {
-            for (int row = 0; row < _rows; row++)
+            for (int col = 0; col < _cols; col++)
             {
-                for (int col = 0; col < _cols; col++)
-                {
-                    SetPixel(row, col, color);
-                }
+                SetPixel(row, col, color);
             }
         }
+    }
 
-        /**
-        * ToPpmImage method
-        *
-        * @param filePath the path to the file to save the image to
-        * @param fileName the name of the file to save the image to
-        */
-        public void ToPpmImage(string filePath, string fileName = "ppmImage")
+    /**
+    * ToPpmImage method
+    *
+    * @param filePath the path to the file to save the image to
+    * @param fileName the name of the file to save the image to
+    */
+    public void ToPpmImage(string filePath, string fileName = "ppmImage")
+    {
+        StringBuilder sb = new();
+        _ = sb.AppendLine("P3");
+        _ = sb.AppendLine($"{_cols} {_rows}");
+        _ = sb.AppendLine("255"); //Highest Color intensity
+
+        string space = " ";
+        for (int r = 0; r < _rows; r++)
         {
-            StringBuilder sb = new();
-            _ = sb.AppendLine("P3");
-            _ = sb.AppendLine($"{_cols} {_rows}");
-            _ = sb.AppendLine("255"); //Highest Color intensity
-
-            string space = " ";
-            for (int r = 0; r < _rows; r++)
+            for (int c = 0; c < _cols; c++)
             {
-                for (int c = 0; c < _cols; c++)
-                {
-                    Color pixel = GetPixel(r, c);
-                    _ = sb.Append(pixel.Red);
-                    _ = sb.Append(space);
-                    _ = sb.Append(pixel.Green);
-                    _ = sb.Append(space);
-                    _ = sb.Append(pixel.Blue);
-                    _ = sb.AppendLine();
-                }
+                Color pixel = GetPixel(r, c);
+                _ = sb.Append(pixel.Red);
+                _ = sb.Append(space);
+                _ = sb.Append(pixel.Green);
+                _ = sb.Append(space);
+                _ = sb.Append(pixel.Blue);
+                _ = sb.AppendLine();
             }
-            string text = sb.ToString();
-            string finalName = Path.Join(filePath, $"{fileName}.ppm");
-            File.WriteAllText(finalName, text);
         }
+        string text = sb.ToString();
+        string finalName = Path.Join(filePath, $"{fileName}.ppm");
+        File.WriteAllText(finalName, text);
     }
 }
